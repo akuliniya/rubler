@@ -1,9 +1,9 @@
 package ru.otus.currency_signer.domain;
 
 import ru.otus.currency_signer.api.domain.Currency;
-import ru.otus.currency_signer.api.domain.LevelsInPrice;
+import ru.otus.currency_signer.api.domain.PriceDegrees;
 
-public enum CurrencyMajorForms_RU implements LevelsInPrice {
+public enum CurrencyMajorForms_RU implements PriceDegrees {
     ONE,
     FROM_2_TO_4,
     MORE,

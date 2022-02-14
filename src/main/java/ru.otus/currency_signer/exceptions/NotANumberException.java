@@ -4,6 +4,10 @@ public class NotANumberException extends Exception{
     String message;
     Throwable cause;
 
+    public NotANumberException() {
+        this.message = "Введено не число";
+    }
+
     public NotANumberException(Throwable cause) {
         this.message = "Введено не число";
         this.cause = cause;

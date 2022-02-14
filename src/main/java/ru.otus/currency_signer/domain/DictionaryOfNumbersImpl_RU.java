@@ -5,10 +5,10 @@ import ru.otus.currency_signer.api.domain.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NumbersDictionaryImpl_RU implements Dictionary {
+public class DictionaryOfNumbersImpl_RU implements Dictionary {
     private static final Map<Enum, String> TRANSLATIONS_LIST = new HashMap<>();
 
-    public NumbersDictionaryImpl_RU() {
+    public DictionaryOfNumbersImpl_RU() {
         TRANSLATIONS_LIST.put(Units.ZERO, "ноль");
         TRANSLATIONS_LIST.put(Units.ONE_MALE, "один");
         TRANSLATIONS_LIST.put(Units.ONE_FEMALE, "одна");

@@ -1,4 +1,4 @@
-package java.ru.otus.assertions;
+package ru.otus.assertions;
 
 public class Assertions {
     public static void assertEquals(int expected, int actual) {

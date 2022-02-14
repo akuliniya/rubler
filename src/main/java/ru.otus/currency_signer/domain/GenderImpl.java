@@ -1,10 +1,12 @@
 package ru.otus.currency_signer.domain;
 
+import ru.otus.currency_signer.api.domain.Gender;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public enum Gender {
+public enum GenderImpl implements Gender {
     MALE(1),
     FEMALE(0);
 
@@ -13,12 +15,12 @@ public enum Gender {
 
     static {
         GENDER_VALUES = new ArrayList<>();
-        for (Gender currencyGender : Gender.values()) {
+        for (GenderImpl currencyGender : GenderImpl.values()) {
             GENDER_VALUES.add(currencyGender.value);
         }
     }
 
-    Gender(int value) {
+    GenderImpl(int value) {
         this.value = value;
     }
 

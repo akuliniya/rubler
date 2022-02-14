@@ -2,24 +2,24 @@ package ru.otus.currency_signer.domain;
 
 import ru.otus.currency_signer.api.domain.Currency;
 import ru.otus.currency_signer.api.domain.Dictionary;
-import ru.otus.currency_signer.api.domain.LevelsInPrice;
+import ru.otus.currency_signer.api.domain.PriceDegrees;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Yena implements Currency {
     private final String currencyName = "Йена";
-    private final int currencyGenderMajor = Gender.FEMALE.getValue();
-    private final int currencyGenderMinor = Gender.MALE.getValue();
-    private final ArrayList<LevelsInPrice>  YENA_FORMS = new ArrayList<>(Arrays.asList(
+    private final int currencyGenderMajor = GenderImpl.FEMALE.getValue();
+    private final int currencyGenderMinor = GenderImpl.MALE.getValue();
+    private final ArrayList<PriceDegrees>  YENA_FORMS = new ArrayList<>(Arrays.asList(
             CurrencyMajorForms_RU.ONE,
             CurrencyMajorForms_RU.FROM_2_TO_4,
             CurrencyMajorForms_RU.MORE));
-    private final ArrayList<LevelsInPrice> CEN_FORMS = new ArrayList<>(Arrays.asList(
+    private final ArrayList<PriceDegrees> CEN_FORMS = new ArrayList<>(Arrays.asList(
             CurrencyMinorForms_RU.ONE,
             CurrencyMinorForms_RU.FROM_2_TO_4,
             CurrencyMinorForms_RU.MORE));
-    Dictionary dictionary = new CurrencyDictionaryImpl_JPY();
+    Dictionary dictionary = new CurrencyWordFormsDictionaryImpl_JPY();
 
     @Override
     public int getCurrencyGenderMajor() {
@@ -32,12 +32,12 @@ public class Yena implements Currency {
     }
 
     @Override
-    public ArrayList<LevelsInPrice> getCurrencyMajorForms() {
+    public ArrayList<PriceDegrees> getCurrencyMajorForms() {
         return YENA_FORMS;
     }
 
     @Override
-    public ArrayList<LevelsInPrice> getCurrencyMinorForms() {
+    public ArrayList<PriceDegrees> getCurrencyMinorForms() {
         return CEN_FORMS;
     }
 
@@ -46,5 +46,9 @@ public class Yena implements Currency {
         return dictionary;
     }
 
+    @Override
+    public String getName() {
+        return currencyName;
+    }
 
 }

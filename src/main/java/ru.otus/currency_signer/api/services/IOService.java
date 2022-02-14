@@ -6,6 +6,6 @@ public interface IOService {
     void outputStr(String s);
     void outputErr(String s);
     void outputStr(String template, Object ...args);
-    String readString() throws IOException;
+    String readString();
     String readString(String prompt) throws IOException;
 }

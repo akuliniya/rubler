@@ -1,12 +1,12 @@
 package ru.otus.currency_signer.domain;
 
 import ru.otus.currency_signer.api.domain.Currency;
-import ru.otus.currency_signer.api.domain.LevelsInPrice;
+import ru.otus.currency_signer.api.domain.PriceDegrees;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public enum Hundreds implements LevelsInPrice {
+public enum Hundreds implements PriceDegrees {
     ONE_HUNDRED,
     TWO_HUNDRED,
     THREE_HUNDRED,
@@ -16,12 +16,12 @@ public enum Hundreds implements LevelsInPrice {
     SEVEN_HUNDRED,
     EIGHT_HUNDRED,
     NINE_HUNDRED,
-    ж;
+    ;
 
-    private static final ArrayList<LevelsInPrice> HUNDREDS = new ArrayList<>(Arrays.asList(
+    private static final ArrayList<PriceDegrees> HUNDREDS = new ArrayList<>(Arrays.asList(
             ONE_HUNDRED, TWO_HUNDRED, THREE_HUNDRED, FOUR_HUNDRED, FIVE_HUNDRED, SIX_HUNDRED, SEVEN_HUNDRED, EIGHT_HUNDRED, NINE_HUNDRED));
 
-    public static ArrayList<LevelsInPrice> getHundreds(){
+    public static ArrayList<PriceDegrees> getHundreds(){
         return HUNDREDS;
     }
 

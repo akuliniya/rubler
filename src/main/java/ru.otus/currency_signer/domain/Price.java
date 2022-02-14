@@ -2,25 +2,25 @@ package ru.otus.currency_signer.domain;
 
 import ru.otus.currency_signer.api.domain.Currency;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Price {
-    int sum;
-    Currency currency;
 
-    public Price(int sum, Currency currency){
-        this.sum = sum;
+    public static final int MAIN_CURRENCY_LEVEL = 1;
+    public static final int SUB_CURRENCY_LEVEL = 0;
+
+    private Currency currency;
+    private String inputPriceValue;
+    private List<Integer> priceSubLevels;
+
+    public Price(List<Integer> priceSubLevels, Currency currency){
+        this.priceSubLevels = priceSubLevels;
         this.currency = currency;
     }
 
-    public void setSum(int sum) {
-        this.sum = sum;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
-    public int getSum() {
-        return sum;
+    public List<Integer> getPriceSubLevels() {
+        return priceSubLevels;
     }
 
     public Currency getCurrency() {
@@ -29,7 +29,11 @@ public class Price {
 
     @Override
     public String toString() {
-        return sum + " " + currency;
+        if (priceSubLevels.get(1) != -1){
+            return priceSubLevels.get(0) + "." + priceSubLevels.get(1) + " " + currency.getName();
+        }else{
+            return priceSubLevels.get(0) + " " + currency.getName();
+        }
     }
 
 }
