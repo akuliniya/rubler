@@ -8,22 +8,22 @@ import java.util.List;
 
 public class SplitServiceImpl implements SplitService {
     @Override
-    public List<String> splitOnSubLevels(String input) throws NotANumberException {
-        ArrayList<String> inputString = new ArrayList<>();
+    public List<String> splitOnSubLevels(String input) throws  NotANumberException {
+        List<String> splitedString = new ArrayList<>();
         int separatorsQuantity = countSeparators(input);
         switch (separatorsQuantity) {
             case 0 -> {
-                inputString.add(input);
-                inputString.add("");
+                splitedString.add(input);
+                splitedString.add("");
             }
             case 1 -> {
                 String[] inputValue = input.split("\\.");
-                inputString.add(inputValue[0]);
-                inputString.add(inputValue[1]);
+                splitedString.add(inputValue[0]);
+                splitedString.add(inputValue[1]);
             }
             default -> throw new NotANumberException();
         }
-        return inputString;
+        return splitedString;
     }
 
     private static int countSeparators(String input) {

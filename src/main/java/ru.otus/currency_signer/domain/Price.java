@@ -2,7 +2,6 @@ package ru.otus.currency_signer.domain;
 
 import ru.otus.currency_signer.api.domain.Currency;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Price {
@@ -11,7 +10,6 @@ public class Price {
     public static final int SUB_CURRENCY_LEVEL = 0;
 
     private Currency currency;
-    private String inputPriceValue;
     private List<Integer> priceSubLevels;
 
     public Price(List<Integer> priceSubLevels, Currency currency){

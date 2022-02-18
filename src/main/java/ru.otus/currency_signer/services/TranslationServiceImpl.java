@@ -64,7 +64,9 @@ public class TranslationServiceImpl implements TranslationService {
         int segment = numberForConvertation % 1000;
 
         int hundreds = segment / 100;
-        if (hundreds > 0) words.add(getHundreds().get(hundreds - 1));
+        if (hundreds > 0) {
+            words.add(getHundreds().get(hundreds - 1));
+        }
 
         segment = segment % 100;
         int tens = segment / 10;

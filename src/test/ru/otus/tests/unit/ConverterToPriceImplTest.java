@@ -43,7 +43,7 @@ class ConverterToPriceImplTest {
     void tearDown() {
     }
 
-    @ParameterizedTest(name = "{index} - {0} convert Int Test")
+    @ParameterizedTest(name = "{index} - {0} convertIntTest")
     @ValueSource(strings = { "0", "1", "10", "01", "123456789", "1000000000", "0456", "00001000000000"})
     void convertIntTest(String sMainCurrency) {
         int subCurrency = -1;
@@ -93,7 +93,7 @@ class ConverterToPriceImplTest {
     }
 
     @ParameterizedTest(name = "{index} - {0} convertIntWrongFormatTest")
-    @ValueSource(strings = { "0f", "0b3", "0x2", "4.05E-13", " 1"})
+    @ValueSource(strings = { "0f", "0b3", "0x2", "4.05E-13", " 1", "1.0O", "1.2.3"})
     void convertIntWrongFormatTest(String sMainCurrency) {
         input += sMainCurrency;
 
@@ -102,31 +102,6 @@ class ConverterToPriceImplTest {
 
         Throwable thrown = assertThrows(NotANumberException.class, () -> {
             Price price = converter.convert(input, currency);
-            Object[] expected = priceSubLevels.toArray();
-            Object[] actual = price.getPriceSubLevels().toArray();
-            assertArrayEquals(expected, actual);
-        });
-        assertNotNull(thrown.getMessage());
-        assertEquals("Введено не число", thrown.getMessage());
-    }
-
-    @ParameterizedTest(name = "{index} - {0} convertDoubleWrongFormatTest")
-    @CsvSource({
-            "4, .05E-13",
-            " 1, 0",
-
-    })
-    void convertDoubleWrongFormatTest(String sMainCurrency, String sSubCurrency) {
-        input += sMainCurrency + SPLITTER + sSubCurrency;
-
-        splitService = new SplitServiceSpy();
-        converter = new ConverterToPriceImpl(splitService, checkDiapason);
-
-        Throwable thrown = assertThrows(NotANumberException.class, () -> {
-            Price price = converter.convert(input, currency);
-            Object[] expected = priceSubLevels.toArray();
-            Object[] actual = price.getPriceSubLevels().toArray();
-            assertArrayEquals(expected, actual);
         });
         assertNotNull(thrown.getMessage());
         assertEquals("Введено не число", thrown.getMessage());
@@ -145,9 +120,6 @@ class ConverterToPriceImplTest {
 
         Throwable thrown = assertThrows(NumberIsNotInDiapasonException.class, () -> {
             Price price = converter.convert(input, currency);
-            Object[] expected = priceSubLevels.toArray();
-            Object[] actual = price.getPriceSubLevels().toArray();
-            assertArrayEquals(expected, actual);
         });
         assertNotNull(thrown.getMessage());
         assertEquals("Введенное число выходит за границы требуемого диапазона", thrown.getMessage());
@@ -173,9 +145,6 @@ class ConverterToPriceImplTest {
 
         Throwable thrown = assertThrows(NumberIsNotInDiapasonException.class, () -> {
             Price price = converter.convert(input, currency);
-            Object[] expected = priceSubLevels.toArray();
-            Object[] actual = price.getPriceSubLevels().toArray();
-            assertArrayEquals(expected, actual);
         });
         assertNotNull(thrown.getMessage());
         assertEquals("Введенное число выходит за границы требуемого диапазона", thrown.getMessage());
