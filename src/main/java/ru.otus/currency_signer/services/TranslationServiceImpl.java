@@ -120,39 +120,25 @@ public class TranslationServiceImpl implements TranslationService {
 
     private int findGender(int level, Currency currency) {
         switch (level) {
-            case 0 -> { return currency.getCurrencyGenderMinor();
-            }
-            case 1 -> { return currency.getCurrencyGenderMajor();
-            }
-            case 2 -> { return getThousandsGender();
-            }
-            case 3 -> { return getMillionsGender();
-            }
-            case 4 -> { return getBillionsGender();
-            }
-            case 5 -> { return getTrillionsGender();
-            }
-            default -> { return 1;
-            }
+            case 0 -> { return currency.getCurrencyGenderMinor();}
+            case 1 -> { return currency.getCurrencyGenderMajor();}
+            case 2 -> { return getThousandsGender();}
+            case 3 -> { return getMillionsGender();}
+            case 4 -> { return getBillionsGender();}
+            case 5 -> { return getTrillionsGender();}
+            default -> { return 1;}
         }
     }
 
     private PriceDegrees chooseFormInLevel(int level, int index, Currency currency) {
         switch (level) {
-            case 0 -> { return currency.getCurrencyMinorForms().get(index);
-            }
-            case 1 -> { return currency.getCurrencyMajorForms().get(index);
-            }
-            case 2 -> { return getThousands().get(index);
-            }
-            case 3 -> { return getMillions().get(index);
-            }
-            case 4 -> { return getBillions().get(index);
-            }
-            case 5 -> { return getTrillions().get(index);
-            }
-            default -> { return null;
-            }
+            case 0 -> { return currency.getCurrencyMinorForms().get(index);}
+            case 1 -> { return currency.getCurrencyMajorForms().get(index);}
+            case 2 -> { return getThousands().get(index);}
+            case 3 -> { return getMillions().get(index);}
+            case 4 -> { return getBillions().get(index);}
+            case 5 -> { return getTrillions().get(index);}
+            default -> { return null;}
         }
     }
 }
