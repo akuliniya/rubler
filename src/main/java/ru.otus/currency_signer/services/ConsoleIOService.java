@@ -5,6 +5,7 @@ import ru.otus.currency_signer.api.services.IOService;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.Locale;
 
 public class ConsoleIOService implements IOService {
     private static final String WRONG_INPUT_MESSAGE = "Некорректный ввод!";
@@ -30,7 +31,7 @@ public class ConsoleIOService implements IOService {
 
     @Override
     public void outputStr(String template, Object... args) {
-        out.printf(template + "%n", args);
+        out.printf(Locale.US, template + "%n", args);
     }
 
     @Override
@@ -44,8 +45,8 @@ public class ConsoleIOService implements IOService {
     }
 
     @Override
-    public String readString(String prompt) {
-        outputStr(prompt);
+    public String readString(String template, Object... args) {
+        out.printf(Locale.US, template + "%n", args);
         try {
             return readString();
         } catch (Exception e) {

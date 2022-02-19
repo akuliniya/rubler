@@ -29,8 +29,8 @@ public class AppRunner {
         Currency currency = new Ruble();
         Price price;
 
-        ioService.outputStr("Ввведите чило в диапазоне от %.2f до %.2f (два знака после запятой)." +
-                        "Для подтверждения ввода нажмите Enter", MIN_VALUE, MAX_VALUE);
+        ioService.outputStr("Ввведите чило в диапазоне от %.2f до %.2f (два знака после запятой, разделитель \".\").%n" +
+                            "Для подтверждения ввода нажмите Enter", MIN_VALUE, MAX_VALUE);
         String input = ioService.readString();
         try {
             price = converterToPrice.convert(input, currency);

@@ -7,5 +7,5 @@ public interface IOService {
     void outputErr(String s);
     void outputStr(String template, Object ...args);
     String readString();
-    String readString(String prompt) throws IOException;
+    String readString(String template, Object... args);
 }

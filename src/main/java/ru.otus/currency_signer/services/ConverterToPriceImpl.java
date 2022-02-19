@@ -46,6 +46,9 @@ public class ConverterToPriceImpl implements ConverterToPrice {
             if (subCurrencyStringValue.length() == 1) {
                 subCurrencyStringValue += "0";
             }
+            if (subCurrencyStringValue.length() > 2){
+                subCurrencyStringValue = subCurrencyStringValue.substring(0, 2);
+            }
             subCurrency = convertToInt(subCurrencyStringValue);
         }
 
@@ -58,9 +61,9 @@ public class ConverterToPriceImpl implements ConverterToPrice {
 
     private int convertToInt(String input)
             throws NumberIsNotInDiapasonException {
-        int number = Integer.parseInt(input);
+        long number = Long.parseLong(input);
         if (checkDiapasonService.isInDiapason(number)) {
-            return number;
+            return (int)number;
         } else {
             throw new NumberIsNotInDiapasonException();
         }
@@ -86,14 +89,4 @@ public class ConverterToPriceImpl implements ConverterToPrice {
         }
         return input;
     }
-
-//    private long convertToLong(String input, double maxValue, double minValue)
-//            throws NumberIsNotInDiapasonException {
-//        long number = Long.parseLong(input);
-//        if (checkDiapasonService.isInDiapason(number, maxValue, minValue)) {
-//            return number;
-//        } else {
-//            throw new NumberIsNotInDiapasonException();
-//        }
-//    }
 }

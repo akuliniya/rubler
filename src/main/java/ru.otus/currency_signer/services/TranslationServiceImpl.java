@@ -5,7 +5,6 @@ import ru.otus.currency_signer.api.domain.Dictionary;
 import ru.otus.currency_signer.api.domain.PriceDegrees;
 import ru.otus.currency_signer.api.services.TranslationService;
 import ru.otus.currency_signer.domain.Price;
-import ru.otus.currency_signer.domain.Units;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,37 +54,37 @@ public class TranslationServiceImpl implements TranslationService {
         return translation;
     }
 
-    private List<PriceDegrees> convertNumericToWords(int numberForConvertation, int level, Currency currency) {
+    private List<PriceDegrees> convertNumericToWords(int number, int level, Currency currency) {
         List<PriceDegrees> words = new ArrayList<>();
-        if (numberForConvertation == 0) {
-            words.add(Units.ZERO);
+
+        if (number == 0){
+            words.add(ZERO);
         }
         int gender = findGender(level, currency);
-        int segment = numberForConvertation % 1000;
 
-        int hundreds = segment / 100;
+        int firstSegment = number % 1000;    //текущий трехзначный сегмент
+        int hundreds = firstSegment / 100;              //цифра сотен
         if (hundreds > 0) {
             words.add(getHundreds().get(hundreds - 1));
         }
 
-        segment = segment % 100;
-        int tens = segment / 10;
-        int units = segment % 10;
-        switch (tens) {
-            case 0 -> {
-            }
+        int secondSegment = firstSegment % 100;
+        int tens = secondSegment / 10;                   //цифра десятков
+        int units = secondSegment % 10;                   //цифра единиц
+        switch(tens) {
+            case 0 -> {}
             case 1 -> words.add(getFirstTen().get(units));
             default -> words.add(getTens().get(tens - 2));
         }
 
-        if (tens == 1) {
-            units = 0;
+        if (tens == 1){
+            units = 0;              //при двузначном остатке от 10 до 19, цифра едициц не должна учитываться
         }
 
-        switch (units) {
-            case 0 -> { }
+        switch(units) {
+            case 0 -> {}
             case 1, 2 -> {
-                switch (gender) {
+                switch(gender) {
                     case 1 -> words.add(getMaleUnits().get(units - 1));
                     default -> words.add(getFemaleUnits().get(units - 1));
                 }
@@ -93,29 +92,20 @@ public class TranslationServiceImpl implements TranslationService {
             default -> words.add(getMaleUnits().get(units - 1));
         }
 
-        words.add(setLevelName(units, segment, level, currency));
+        switch(units) {
+            case 1 -> words.add(chooseFormInLevel(level,0, currency));
+            case 2, 3, 4 -> words.add(chooseFormInLevel(level,1, currency));
+            default -> {
+                if(firstSegment != 0 || level == 1 || level == 0)  //если трехзначный сегмент = 0, то добавлять нужно только "рублей"
+                    words.add(chooseFormInLevel(level,2, currency));
+            }
+        }
 
-        int nextNum = numberForConvertation / 1000;
-        if (nextNum > 0) {
+        int nextNum = number / 1000;
+        if(nextNum > 0) {
             words.addAll(0, convertNumericToWords(nextNum, level + 1, currency));
         }
         return words;
-    }
-
-    private PriceDegrees setLevelName(int unit, int segment, int level, Currency currency) {
-        switch (unit) {
-            case 1 -> {
-                return chooseFormInLevel(level, 0, currency);
-            }
-            case 2, 3, 4 -> {
-                return chooseFormInLevel(level, 1, currency);
-            }
-            default -> {
-                if (segment != 0|| level == 1 || level == 0)  //если трехзначный сегмент = 0, то добавлять нужно только "рублей"
-                    return chooseFormInLevel(level, 2, currency);
-            }
-        }
-        return null;
     }
 
     private int findGender(int level, Currency currency) {

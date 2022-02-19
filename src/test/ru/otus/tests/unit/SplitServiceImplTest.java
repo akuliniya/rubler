@@ -36,7 +36,6 @@ class SplitServiceImplTest {
     void splitPriceOnSubLevelZeroSplitterTest(String input) {
         expected.add(input);
         expected.add("");
-        System.out.println(input);
         try {
             actual = splitService.splitOnSubLevels(input);
             assertArrayEquals(expected.toArray(), actual.toArray());
@@ -55,7 +54,6 @@ class SplitServiceImplTest {
         expected.add(firstPart);
         expected.add(secondPart);
         input = firstPart + SPLITTER + secondPart;
-        System.out.println(input);
         try {
             actual = splitService.splitOnSubLevels(input);
             assertArrayEquals(expected.toArray(), actual.toArray());
@@ -71,7 +69,6 @@ class SplitServiceImplTest {
     })
     void splitPriceOnSubLevelsDefaultSplitterTest(String firstPart, String secondPart, String thirdPart) {
         input = firstPart + SPLITTER + secondPart + SPLITTER + thirdPart;
-        System.out.println(input);
         Throwable thrown = assertThrows(NotANumberException.class, () -> {
             actual = splitService.splitOnSubLevels(input);
         });

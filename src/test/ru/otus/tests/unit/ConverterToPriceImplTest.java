@@ -92,9 +92,36 @@ class ConverterToPriceImplTest {
         }
     }
 
-    @ParameterizedTest(name = "{index} - {0} convertIntWrongFormatTest")
+    @ParameterizedTest(name = "{index} - {0} {1} convertWrongFormatDoubleTest")
+    @CsvSource({
+            "123, 123",
+            "00001, 1"
+    })
+    void convertWrongFormatDoubleTest(String sMainCurrency, String sSubCurrency) {
+        int mainCurrency = Integer.parseInt(sMainCurrency);
+        if (sSubCurrency.length() == 1){
+            sSubCurrency += sSubCurrency + "0";
+        }
+        int subCurrency = Integer.parseInt(sSubCurrency.substring(0, 2));
+        input += sMainCurrency + SPLITTER + sSubCurrency;
+        priceSubLevels.add(mainCurrency);
+        priceSubLevels.add(subCurrency);
+
+        splitService = new SplitServiceSpy(sMainCurrency, sSubCurrency);
+        converter = new ConverterToPriceImpl(splitService, checkDiapason);
+        try {
+            Price price = converter.convert(input, currency);
+            Object[] expected = priceSubLevels.toArray();
+            Object[] actual = price.getPriceSubLevels().toArray();
+            assertArrayEquals(expected, actual);
+        }catch (NotANumberException | NumberIsNotInDiapasonException e){
+            System.err.println("Тест не прошел по причине: " + e.getMessage());
+        }
+    }
+
+    @ParameterizedTest(name = "{index} - {0} convertNotANumberExceptionTest")
     @ValueSource(strings = { "0f", "0b3", "0x2", "4.05E-13", " 1", "1.0O", "1.2.3"})
-    void convertIntWrongFormatTest(String sMainCurrency) {
+    void convertNotANumberExceptionTest(String sMainCurrency) {
         input += sMainCurrency;
 
         splitService = new SplitServiceSpy();
@@ -148,5 +175,19 @@ class ConverterToPriceImplTest {
         });
         assertNotNull(thrown.getMessage());
         assertEquals("Введенное число выходит за границы требуемого диапазона", thrown.getMessage());
+    }
+
+    @ParameterizedTest(name = "{index} - {0} convertIntWrongFormatTest")
+    @ValueSource(strings = { "123,123"})
+    void convertNumberFormatExceptionTest(String sMainCurrency) {
+        input += sMainCurrency;
+
+        splitService = new SplitServiceSpy();
+        converter = new ConverterToPriceImpl(splitService, checkDiapason);
+
+        Throwable thrown = assertThrows(NumberFormatException.class, () -> {
+            Price price = converter.convert(input, currency);
+        });
+        assertNotNull(thrown.getMessage());
     }
 }

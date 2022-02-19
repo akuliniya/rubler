@@ -10,4 +10,5 @@ public class CheckDiapasonServiceImpl implements CheckDiapasonService {
     public boolean isInDiapason(double input) {
         return input >= MIN_VALUE && input <= MAX_VALUE;
     }
+
 }
